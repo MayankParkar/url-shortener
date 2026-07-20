@@ -1,14 +1,17 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { pool } from "./db.js";
 import { connectRedis } from "./redis.js";
 import rateLimit from "express-rate-limit";
 import routes from "./routes.js";
 
 dotenv.config();
-
 const app = express();
-app.use(cors());
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+? process.env.ALLOWED_ORIGINS.split(",")
+: "*";
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 app.get("/health", async (req, res) => {

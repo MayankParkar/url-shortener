@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-
+const API_URL = import.meta.env.VITE_API_URL || "";
 export default function App() {
   const [url, setUrl] = useState("");
   const [customAlias, setCustomAlias] = useState("");
@@ -14,7 +14,7 @@ export default function App() {
     setResult(null);
     setLoading(true);
     try {
-      const res = await fetch("/api/shorten", {
+      const res = await fetch(`${API_URL}/api/shorten`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
